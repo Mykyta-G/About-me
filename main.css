@@ -1,7 +1,5 @@
 body{
     background-image: url("z12.jpg");
-}
-p, h1, h2{
     color: white;
 }
 h1{
@@ -37,4 +35,7 @@ img{
     float: right;
     object-fit: contain;
     padding: 1rem;
+}
+.dark-mode{
+    color: black;
 }
