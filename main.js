@@ -1,23 +1,23 @@
-// Floating shapes system with random timing and collision prevention
+// Optimized floating shapes system - reduced complexity for better performance
 let activeShapes = [];
 
 function createPS4Background() {
-    // Create initial shapes
-    for (let i = 0; i < 15; i++) {
+    // Create fewer initial shapes for better performance
+    for (let i = 0; i < 8; i++) {
         createFloatingShape();
     }
     
     createInteractiveParticles();
 }
 
-// Find position where new shape won't overlap existing ones
+// Simplified position finding
 function getNonOverlappingPosition(size) {
-    const padding = 80;
-    const maxAttempts = 100;
+    const padding = 60;
+    const maxAttempts = 50;
     
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
-        const x = Math.random() * (window.innerWidth - size - 100) + 50;
-        const y = Math.random() * (window.innerHeight - size - 100) + 50;
+        const x = Math.random() * (window.innerWidth - size - 80) + 40;
+        const y = Math.random() * (window.innerHeight - size - 80) + 40;
         
         let isOverlapping = false;
         for (const shape of activeShapes) {
@@ -42,34 +42,34 @@ function getNonOverlappingPosition(size) {
     }
     
     return {
-        x: Math.random() * (window.innerWidth - size - 100) + 50,
-        y: Math.random() * (window.innerHeight - size - 100) + 50
+        x: Math.random() * (window.innerWidth - size - 80) + 40,
+        y: Math.random() * (window.innerHeight - size - 80) + 40
     };
 }
 
 function createFloatingShape() {
     const shape = document.createElement('div');
-    const size = Math.random() * 80 + 40;
+    const size = Math.random() * 60 + 30; // Smaller sizes for better performance
     
     const position = getNonOverlappingPosition(size);
     const x = position.x;
     const y = position.y;
     
-    // Random movement and rotation properties
+    // Simplified movement properties
     const spinDirection = Math.random() > 0.5 ? 1 : -1;
-    const spinSpeed = Math.random() * 0.8 + 0.4;
-    const moveX = (Math.random() - 0.5) * 1.2;
-    const moveY = (Math.random() - 0.5) * 1.2;
-    const moveSpeed = Math.random() * 0.3 + 0.2;
+    const spinSpeed = Math.random() * 0.6 + 0.3;
+    let moveX = (Math.random() - 0.5) * 0.8;
+    let moveY = (Math.random() - 0.5) * 0.8;
+    const moveSpeed = Math.random() * 0.2 + 0.1;
     
-    const lifetime = Math.random() * 30000 + 25000;
+    const lifetime = Math.random() * 40000 + 30000; // Longer lifetime
     
     shape.style.cssText = `
         position: fixed;
         width: ${size}px;
         height: ${size}px;
-        background: linear-gradient(45deg, rgba(0, 150, 255, 0.5), rgba(0, 150, 255, 0.2));
-        border: 3px solid rgba(0, 150, 255, 0.8);
+        background: linear-gradient(45deg, rgba(0, 150, 255, 0.4), rgba(0, 150, 255, 0.15));
+        border: 2px solid rgba(0, 150, 255, 0.6);
         border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
         left: ${x}px;
         top: ${y}px;
@@ -77,8 +77,8 @@ function createFloatingShape() {
         z-index: -1;
         opacity: 0;
         transform: translate(0px, 0px) rotate(0deg);
-        box-shadow: 0 0 30px rgba(0, 150, 255, 0.6), inset 0 0 20px rgba(0, 150, 255, 0.1);
-        transition: opacity 3s ease-in-out;
+        box-shadow: 0 0 20px rgba(0, 150, 255, 0.4);
+        transition: opacity 2s ease-in-out;
         will-change: transform;
     `;
     
@@ -90,7 +90,7 @@ function createFloatingShape() {
         shape.style.opacity = '1';
     }, 100);
     
-    // Movement and rotation tracking
+    // Simplified movement tracking
     let currentX = 0;
     let currentY = 0;
     let currentRotation = 0;
@@ -100,42 +100,42 @@ function createFloatingShape() {
         currentY += moveY * moveSpeed;
         currentRotation += spinDirection * spinSpeed;
         
-        // Bounce off screen edges
-        if (x + currentX < 50) {
-            currentX = 50 - x;
-            moveX = Math.abs(moveX) * 0.7;
-        } else if (x + currentX > window.innerWidth - size - 50) {
-            currentX = window.innerWidth - size - 50 - x;
-            moveX = -Math.abs(moveX) * 0.7;
+        // Simplified bounce logic
+        if (x + currentX < 40) {
+            currentX = 40 - x;
+            moveX = Math.abs(moveX) * 0.8;
+        } else if (x + currentX > window.innerWidth - size - 40) {
+            currentX = window.innerWidth - size - 40 - x;
+            moveX = -Math.abs(moveX) * 0.8;
         }
         
-        if (y + currentY < 50) {
-            currentY = 50 - y;
-            moveY = Math.abs(moveY) * 0.7;
-        } else if (y + currentY > window.innerHeight - size - 50) {
-            currentY = window.innerHeight - size - 50 - y;
-            moveY = -Math.abs(moveY) * 0.7;
+        if (y + currentY < 40) {
+            currentY = 40 - y;
+            moveY = Math.abs(moveY) * 0.8;
+        } else if (y + currentY > window.innerHeight - size - 40) {
+            currentY = window.innerHeight - size - 40 - y;
+            moveY = -Math.abs(moveY) * 0.8;
         }
         
         shape.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${currentRotation}deg)`;
         
-    }, 80);
+    }, 100); // Slower update rate for better performance
     
-    // Glow animation
-    let glowIntensity = 0.6;
+    // Simplified glow animation
+    let glowIntensity = 0.4;
     let glowDirection = 1;
     
     const glowInterval = setInterval(() => {
-        glowIntensity += glowDirection * 0.008;
-        if (glowIntensity >= 0.65 || glowIntensity <= 0.55) {
+        glowIntensity += glowDirection * 0.005;
+        if (glowIntensity >= 0.5 || glowIntensity <= 0.3) {
             glowDirection *= -1;
         }
-        shape.style.boxShadow = `0 0 ${30 * glowIntensity}px rgba(0, 150, 255, ${glowIntensity}), inset 0 0 20px rgba(0, 150, 255, 0.1)`;
-    }, 300);
+        shape.style.boxShadow = `0 0 ${20 * glowIntensity}px rgba(0, 150, 255, ${glowIntensity})`;
+    }, 500); // Slower glow updates
     
     // Fade out and remove shape
     setTimeout(() => {
-        shape.style.transition = 'opacity 4s ease-in-out';
+        shape.style.transition = 'opacity 3s ease-in-out';
         shape.style.opacity = '0';
         
         clearInterval(moveInterval);
@@ -149,7 +149,7 @@ function createFloatingShape() {
                     activeShapes.splice(index, 1);
                 }
             }
-        }, 4000);
+        }, 3000);
     }, lifetime);
 }
 
@@ -165,9 +165,10 @@ function createInteractiveParticles() {
         z-index: -1;
     `;
     
-    for (let i = 0; i < 30; i++) {
+    // Fewer particles for better performance
+    for (let i = 0; i < 15; i++) {
         const particle = document.createElement('div');
-        const size = Math.random() * 5 + 2;
+        const size = Math.random() * 4 + 1;
         const x = Math.random() * window.innerWidth;
         const y = Math.random() * window.innerHeight;
         
@@ -175,12 +176,12 @@ function createInteractiveParticles() {
             position: absolute;
             width: ${size}px;
             height: ${size}px;
-            background: rgba(0, 150, 255, 0.9);
+            background: rgba(0, 150, 255, 0.7);
             border-radius: 50%;
             left: ${x}px;
             top: ${y}px;
-            animation: particleFloat ${Math.random() * 20 + 20}s linear infinite;
-            box-shadow: 0 0 ${size * 4}px rgba(0, 150, 255, 0.8);
+            animation: particleFloat ${Math.random() * 15 + 15}s linear infinite;
+            box-shadow: 0 0 ${size * 3}px rgba(0, 150, 255, 0.6);
             opacity: 1;
         `;
         
@@ -215,25 +216,95 @@ function addDynamicCSS() {
     document.head.appendChild(style);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    addDynamicCSS();
-    createPS4Background();
-    
-    // Handle video placeholders
-    handleVideoPlaceholders();
-    
-    // Maintain shape count with random spawn timing
-    setInterval(() => {
-        if (activeShapes.length < 15) {
-            const randomDelay = Math.random() * 12000 + 8000;
-            setTimeout(() => {
-                if (activeShapes.length < 15) {
-                    createFloatingShape();
-                }
-            }, randomDelay);
+// Hamburger Menu Functionality
+function initHamburgerMenu() {
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+
+    if (!hamburgerMenu || !navOverlay) return;
+
+    // Toggle menu
+    hamburgerMenu.addEventListener('click', function() {
+        hamburgerMenu.classList.toggle('active');
+        navOverlay.classList.toggle('active');
+        
+        // Prevent body scroll when menu is open
+        if (navOverlay.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
         }
-    }, 10000);
-});
+    });
+
+    // Close menu when clicking on a link and scroll to section
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Close the menu
+            hamburgerMenu.classList.remove('active');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Get the target section
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetSection) {
+                // Smooth scroll to the target section
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Close menu when clicking outside
+    navOverlay.addEventListener('click', function(e) {
+        if (e.target === navOverlay) {
+            hamburgerMenu.classList.remove('active');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Close menu with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navOverlay.classList.contains('active')) {
+            hamburgerMenu.classList.remove('active');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+// Optimized Scroll Animation Functionality
+function initScrollAnimations() {
+    // Elements to animate on scroll
+    const scrollElements = document.querySelectorAll('.container, .name-section, .projects-section, .about-section, .contact-section');
+    
+    if (scrollElements.length === 0) return;
+    
+    // Create intersection observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add animation class when element comes into view
+                entry.target.classList.add('scroll-animate');
+            }
+        });
+    }, {
+        threshold: 0.15, // Trigger when 15% of element is visible
+        rootMargin: '0px 0px -80px 0px' // Start animation when element is 80px from bottom
+    });
+    
+    // Observe all scroll elements
+    scrollElements.forEach(element => {
+        observer.observe(element);
+    });
+}
 
 function handleVideoPlaceholders() {
     const videoContainers = document.querySelectorAll('.image-placeholder');
@@ -244,28 +315,38 @@ function handleVideoPlaceholders() {
             // Hide the placeholder X when video is present
             container.classList.add('video-present');
             
-            // Add video event listeners for better user experience
-            video.addEventListener('loadeddata', () => {
-                console.log('Video loaded successfully:', video.src);
-            });
-            
-            video.addEventListener('error', (e) => {
-                console.error('Video error:', e);
-                // Fallback: show placeholder if video fails to load
-                container.classList.remove('video-present');
-            });
-            
-            // Ensure video plays on mobile devices
+            // Simplified video handling
             video.addEventListener('canplay', () => {
                 // Try to play the video
                 const playPromise = video.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
                         console.log('Autoplay prevented:', error);
-                        // Add play button or other fallback
                     });
                 }
             });
         }
     });
 }
+
+// Main initialization - everything in one place
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize all systems in the correct order
+    addDynamicCSS();
+    createPS4Background();
+    initHamburgerMenu();
+    initScrollAnimations();
+    handleVideoPlaceholders();
+    
+    // Maintain shape count with longer intervals for better performance
+    setInterval(() => {
+        if (activeShapes.length < 8) { // Reduced max shapes
+            const randomDelay = Math.random() * 15000 + 10000; // Longer delays
+            setTimeout(() => {
+                if (activeShapes.length < 8) {
+                    createFloatingShape();
+                }
+            }, randomDelay);
+        }
+    }, 15000); // Longer check interval
+});

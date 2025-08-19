@@ -4,16 +4,64 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mykyta Grogul</title>
+    <title>About Me</title>
     <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
-    <div class="name-section">
+    <!-- Hamburger Menu Button -->
+    <div class="hamburger-menu">
+        <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="name-section" id="home">
         <h1>Mykyta Grogul</h1>
     </div>
 
-    <div class="projects-section">
+    <div class="about-section" id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About Me</h2>
+                <p>
+                    Hi, I'm Mykyta Grogul, a passionate and dedicated student in Technology, Information, and Media at NTI Gymnasiet in Helsingborg.
+                </p>
+                <p>
+                    I'm currently seeking opportunities to apply my technical knowledge in real-world projects and gain valuable work experience.
+                </p>
+                <p>
+                    I'm a hardworking, communicative, and engaged individual who thrives in collaborative environments. My technical skills include programming in C#, Java, HTML/CSS, JavaScript, and Vue.js, with experience in both individual and group projects.
+                </p>
+                <p>
+                    I have a strong foundation in web development and frontend technologies, along with expertise in problem-solving and technical troubleshooting.
+                </p>
+
+                <p>
+                    Feel free to explore my projects on GitHub to see examples of my work!
+                </p>
+            </div>
+            <div class="about-image">
+                <img src="Pf.jpg" alt="Mykyta Grogul" />
+            </div>
+        </div>
+    </div>
+
+    <div class="projects-section" id="projects">
         <h2>Projects</h2>
     </div>
 
@@ -69,6 +117,45 @@
                 <br>
                 <a href="https://github.com/Mykyta-G/Trading-Simulation-Platform">https://github.com/Mykyta-G/Trading-Simulation-Platform</a>
             </p> 
+        </div>
+    </div>
+
+    <div class="contact-section" id="contact">
+        <div class="contact-content">
+            <h2>Get In Touch</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p><a href="mailto:mykyta.grogul@gmail.com">mykyta.grogul@gmail.com</a></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-details">
+                        <h3>Phone</h3>
+                        <p><a href="tel:+46763434480">+46 76 343 44 80</a></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-details">
+                        <h3>Location</h3>
+                        <p>Landskrona, Sweden</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">💻</div>
+                    <div class="contact-details">
+                        <h3>GitHub</h3>
+                        <p><a href="https://github.com/Mykyta-G" target="_blank">github.com/Mykyta-G</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-message">
+                <p>I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology. Feel free to reach out!</p>
+            </div>
         </div>
     </div>
 
