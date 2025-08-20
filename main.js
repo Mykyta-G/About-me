@@ -1,8 +1,6 @@
-// Optimized floating shapes system - reduced complexity for better performance
 let activeShapes = [];
 
 function createPS4Background() {
-    // Create fewer initial shapes for better performance
     for (let i = 0; i < 8; i++) {
         createFloatingShape();
     }
@@ -10,7 +8,6 @@ function createPS4Background() {
     createInteractiveParticles();
 }
 
-// Simplified position finding
 function getNonOverlappingPosition(size) {
     const padding = 60;
     const maxAttempts = 50;
@@ -49,20 +46,19 @@ function getNonOverlappingPosition(size) {
 
 function createFloatingShape() {
     const shape = document.createElement('div');
-    const size = Math.random() * 60 + 30; // Smaller sizes for better performance
+    const size = Math.random() * 60 + 30;
     
     const position = getNonOverlappingPosition(size);
     const x = position.x;
     const y = position.y;
     
-    // Simplified movement properties
     const spinDirection = Math.random() > 0.5 ? 1 : -1;
     const spinSpeed = Math.random() * 0.6 + 0.3;
     let moveX = (Math.random() - 0.5) * 0.8;
     let moveY = (Math.random() - 0.5) * 0.8;
     const moveSpeed = Math.random() * 0.2 + 0.1;
     
-    const lifetime = Math.random() * 40000 + 30000; // Longer lifetime
+    const lifetime = Math.random() * 40000 + 30000;
     
     shape.style.cssText = `
         position: fixed;
@@ -85,12 +81,10 @@ function createFloatingShape() {
     document.body.appendChild(shape);
     activeShapes.push(shape);
     
-    // Fade in the shape
     setTimeout(() => {
         shape.style.opacity = '1';
     }, 100);
     
-    // Simplified movement tracking
     let currentX = 0;
     let currentY = 0;
     let currentRotation = 0;
@@ -100,7 +94,6 @@ function createFloatingShape() {
         currentY += moveY * moveSpeed;
         currentRotation += spinDirection * spinSpeed;
         
-        // Simplified bounce logic
         if (x + currentX < 40) {
             currentX = 40 - x;
             moveX = Math.abs(moveX) * 0.8;
@@ -119,9 +112,8 @@ function createFloatingShape() {
         
         shape.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${currentRotation}deg)`;
         
-    }, 100); // Slower update rate for better performance
+    }, 100);
     
-    // Simplified glow animation
     let glowIntensity = 0.4;
     let glowDirection = 1;
     
@@ -131,9 +123,8 @@ function createFloatingShape() {
             glowDirection *= -1;
         }
         shape.style.boxShadow = `0 0 ${20 * glowIntensity}px rgba(0, 150, 255, ${glowIntensity})`;
-    }, 500); // Slower glow updates
+    }, 500);
     
-    // Fade out and remove shape
     setTimeout(() => {
         shape.style.transition = 'opacity 3s ease-in-out';
         shape.style.opacity = '0';
@@ -165,7 +156,6 @@ function createInteractiveParticles() {
         z-index: -1;
     `;
     
-    // Fewer particles for better performance
     for (let i = 0; i < 15; i++) {
         const particle = document.createElement('div');
         const size = Math.random() * 4 + 1;
@@ -216,7 +206,7 @@ function addDynamicCSS() {
     document.head.appendChild(style);
 }
 
-// Hamburger Menu Functionality
+
 function initHamburgerMenu() {
     const hamburgerMenu = document.querySelector('.hamburger-menu');
     const navOverlay = document.querySelector('.nav-overlay');
@@ -224,12 +214,10 @@ function initHamburgerMenu() {
 
     if (!hamburgerMenu || !navOverlay) return;
 
-    // Toggle menu
     hamburgerMenu.addEventListener('click', function() {
         hamburgerMenu.classList.toggle('active');
         navOverlay.classList.toggle('active');
         
-        // Prevent body scroll when menu is open
         if (navOverlay.classList.contains('active')) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -237,22 +225,18 @@ function initHamburgerMenu() {
         }
     });
 
-    // Close menu when clicking on a link and scroll to section
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Close the menu
             hamburgerMenu.classList.remove('active');
             navOverlay.classList.remove('active');
             document.body.style.overflow = '';
             
-            // Get the target section
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
-                // Smooth scroll to the target section
                 targetSection.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
@@ -261,7 +245,6 @@ function initHamburgerMenu() {
         });
     });
 
-    // Close menu when clicking outside
     navOverlay.addEventListener('click', function(e) {
         if (e.target === navOverlay) {
             hamburgerMenu.classList.remove('active');
@@ -270,7 +253,6 @@ function initHamburgerMenu() {
         }
     });
 
-    // Close menu with Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && navOverlay.classList.contains('active')) {
             hamburgerMenu.classList.remove('active');
@@ -280,27 +262,22 @@ function initHamburgerMenu() {
     });
 }
 
-// Optimized Scroll Animation Functionality
 function initScrollAnimations() {
-    // Elements to animate on scroll
     const scrollElements = document.querySelectorAll('.container, .name-section, .projects-section, .about-section, .contact-section');
     
     if (scrollElements.length === 0) return;
     
-    // Create intersection observer for scroll animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Add animation class when element comes into view
                 entry.target.classList.add('scroll-animate');
             }
         });
     }, {
-        threshold: 0.15, // Trigger when 15% of element is visible
-        rootMargin: '0px 0px -80px 0px' // Start animation when element is 80px from bottom
+        threshold: 0.15,
+        rootMargin: '0px 0px -80px 0px'
     });
     
-    // Observe all scroll elements
     scrollElements.forEach(element => {
         observer.observe(element);
     });
@@ -312,12 +289,9 @@ function handleVideoPlaceholders() {
     videoContainers.forEach(container => {
         const video = container.querySelector('video');
         if (video) {
-            // Hide the placeholder X when video is present
             container.classList.add('video-present');
             
-            // Simplified video handling
             video.addEventListener('canplay', () => {
-                // Try to play the video
                 const playPromise = video.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
@@ -329,24 +303,21 @@ function handleVideoPlaceholders() {
     });
 }
 
-// Main initialization - everything in one place
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize all systems in the correct order
     addDynamicCSS();
     createPS4Background();
     initHamburgerMenu();
     initScrollAnimations();
     handleVideoPlaceholders();
     
-    // Maintain shape count with longer intervals for better performance
     setInterval(() => {
-        if (activeShapes.length < 8) { // Reduced max shapes
-            const randomDelay = Math.random() * 15000 + 10000; // Longer delays
+        if (activeShapes.length < 8) {
+            const randomDelay = Math.random() * 15000 + 10000;
             setTimeout(() => {
                 if (activeShapes.length < 8) {
                     createFloatingShape();
                 }
             }, randomDelay);
         }
-    }, 15000); // Longer check interval
+    }, 15000);
 });
